@@ -42,6 +42,12 @@ defmodule SimpleTodoCore.UseCases.UpdateTaskListTest do
       return = UpdateTaskList.call(%UpdateTaskListDeps{task_list_repository: InMemoryTaskListRepository}).(updated_task_list)
       assert :ok = return
     end
+
+    test "it updates a task list successfully when name does not change" do
+      {:ok, task} = InMemoryTaskListRepository.create(%TaskList{name: @list_name2})
+      return = UpdateTaskList.call(%UpdateTaskListDeps{task_list_repository: InMemoryTaskListRepository}).(task)
+      assert :ok = return
+    end
   end
 end
 
