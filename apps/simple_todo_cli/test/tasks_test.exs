@@ -66,4 +66,31 @@ defmodule SimpleTodoCli.TasksTest do
              """
     end
   end
+
+  describe "when there is already a task list and task created" do
+    setup do
+      capture_io(fn ->
+        SimpleTodoCli.Main.main(["new-task-list", "--name", "My Task List"])
+        SimpleTodoCli.Main.main(["new-task", "--description", "My Task", "--task-list-id", "0"])
+      end)
+
+      :ok
+    end
+
+    test "stodo delete-task --id 0" do
+      result =
+        capture_io(fn ->
+          SimpleTodoCli.Main.main([
+            "delete-task",
+            "--id",
+            "0"
+          ])
+        end)
+
+      assert result == """
+             OK
+             """
+      assert [] = CsvTaskRepository.find_all()
+    end
+  end
 end

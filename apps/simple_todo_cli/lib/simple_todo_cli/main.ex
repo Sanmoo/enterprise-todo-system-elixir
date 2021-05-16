@@ -19,6 +19,11 @@ defmodule SimpleTodoCli.Main do
             task_list_id: Integer.parse(opts[:task_list_id], 10) |> elem(0),
             description: opts[:description]
           })
+
+        "delete-task" ->
+          UseCasesGateway.delete_task(%{
+            id: Integer.parse(opts[:id], 10) |> elem(0)
+          })
       end
 
     handle_response(result)
@@ -26,6 +31,10 @@ defmodule SimpleTodoCli.Main do
 
   defp handle_response({:ok, result}) do
     Scribe.print(result, data: Map.keys(result) |> List.delete_at(0) |> List.delete(:tasks), colorize: false)
+  end
+
+  defp handle_response(:ok) do
+    IO.puts("OK")
   end
 
   defp handle_response({:error, [{_, {msg, _}} | _]}) do
