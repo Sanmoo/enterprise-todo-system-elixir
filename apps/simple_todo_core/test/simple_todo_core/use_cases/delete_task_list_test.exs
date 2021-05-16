@@ -24,7 +24,7 @@ defmodule SimpleTodoCore.UseCases.DeleteTaskListTest do
         task_list_repository: InMemoryTaskListRepository
       }),
       create_task_list: CreateTaskList.call(%CreateTaskListDeps{task_list_repository: InMemoryTaskListRepository}),
-      find_task_list: FindTaskList.call(%FindTaskListDeps{task_list_repository: InMemoryTaskListRepository, task_repository: InMemoryTaskRepository})
+      find_task_list: FindTaskList.call(%FindTaskListDeps{task_list_repository: InMemoryTaskListRepository, task_repository: InMemoryTaskRepository}),
     }
   end
 
